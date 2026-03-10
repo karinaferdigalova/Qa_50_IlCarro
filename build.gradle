@@ -20,6 +20,8 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
 
     implementation 'ch.qos.logback:logback-classic:1.4.14'
+
+    implementation 'net.datafaker:datafaker:2.5.2'
 }
 
 test {
