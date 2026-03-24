@@ -12,12 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class LoginPage extends BasePage {
-    public LoginPage(WebDriver driver) {
-        setDriver (driver);
-        PageFactory.initElements (new AjaxElementLocatorFactory (driver,
-                10), this);
-    }
-
     @FindBy (id="email")
     WebElement inputEmail;
     @FindBy (id="password")
@@ -27,13 +21,19 @@ public class LoginPage extends BasePage {
     @FindBy (xpath="//h2[text()='Logged in success']")
     WebElement popUpSuccessLogin;
 
+    public LoginPage(WebDriver driver) {
+        setDriver (driver);
+        PageFactory.initElements (new AjaxElementLocatorFactory (driver, 10), this);
+    }
 
     public void submitLoginForm(User user) {
         inputEmail.sendKeys (user.getEmail ());
         inputPassword.sendKeys (user.getPassword ());
+    }
+
+    public void clickYalla() {
         new WebDriverWait (driver, Duration.ofSeconds (10))
-                .until (ExpectedConditions.elementToBeClickable (btnYalla))
-                .click ();
+                .until (ExpectedConditions.elementToBeClickable (btnYalla)).click ();
     }
 
     public boolean isLoggenDisplayed() {
