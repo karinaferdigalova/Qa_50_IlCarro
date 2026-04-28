@@ -10,6 +10,7 @@ import pages.HomePage;
 import pages.LoginPage;
 import pages.PopUpPage;
 import pages.RegistrationPage;
+import static utils.PropertiesReader.*;
 
 public class LoginTests extends AppManager {
     HomePage homePage;
@@ -25,8 +26,8 @@ public class LoginTests extends AppManager {
     @Test
     public void loginPositiveTest() {
         User user = User.builder ()
-                .email ("karina29@gmail.com")
-                .password ("karinA29!")
+                .email (getProperty ("base.properties","email"))
+                .password  (getProperty ("base.properties","password"))
                 .build ();
         HomePage homePage = new HomePage (getDriver ());
         homePage.clickBtnLogin ();
@@ -39,8 +40,8 @@ public class LoginTests extends AppManager {
     @Test
     public void loginPositiveTestPopUp() {
         User user = User.builder ()
-                .email ("karina29@gmail.com")
-                .password ("karinA29!")
+                .email (getProperty ("base.properties","email"))
+                .password  (getProperty ("base.properties","password"))
                 .build ();
         HomePage homePage = new HomePage (getDriver ());
         homePage.clickBtnLogin ();
