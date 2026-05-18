@@ -1,9 +1,6 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,11 +22,9 @@ public abstract class BasePage {
     List<WebElement> errorsList;
 
     public boolean isTextInErrorPresent(String text) {
-        if (errorsList == null || errorsList.isEmpty ())
-            return false;
+        if (errorsList == null || errorsList.isEmpty ()) return false;
         for (WebElement element : errorsList) {
-            if (element.getText ().contains (text))
-                return true;
+            if (element.getText ().contains (text)) return true;
         }
         return false;
     }
@@ -51,22 +46,16 @@ public abstract class BasePage {
     }
 
     public boolean isTextInElementPresentWithWait(WebElement element, String text) {
-        return new WebDriverWait (driver, Duration.ofSeconds (10))
-                .until (ExpectedConditions.textToBePresentInElement (element, text));
+        return new WebDriverWait (driver, Duration.ofSeconds (10)).until (ExpectedConditions.textToBePresentInElement (element, text));
 
     }
 
     public void triggerBlur(WebElement element) {
-        new Actions (driver)
-                .moveToElement (element)
-                .click ()
-                .sendKeys (Keys.TAB)
-                .perform ();
+        new Actions (driver).moveToElement (element).click ().sendKeys (Keys.TAB).perform ();
     }
 
     public <T extends BasePage> T clickButtonHeader(HeaderMenuItem item) {
-        WebElement button = new WebDriverWait (driver, Duration.ofSeconds (10))
-                .until (ExpectedConditions.elementToBeClickable (By.xpath (item.getLocator ())));
+        WebElement button = new WebDriverWait (driver, Duration.ofSeconds (10)).until (ExpectedConditions.elementToBeClickable (By.xpath (item.getLocator ())));
         button.click ();
         switch (item) {
             case LOGIN -> {
@@ -93,7 +82,16 @@ public abstract class BasePage {
             default -> throw new IllegalArgumentException ("Invalid header menu item ");
         }
     }
+    public void clickWait(WebElement element, int time) {
+        new WebDriverWait (driver, Duration.ofSeconds (time)).until (ExpectedConditions.elementToBeClickable (element)).click ();
 
+    }
+    public boolean urlContains(String partOfUrl, int time) {
+        try {
+            return new WebDriverWait (driver, Duration.ofSeconds (time))
+                    .until (ExpectedConditions.urlContains (partOfUrl));
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
 }
-
-
